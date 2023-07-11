@@ -6,4 +6,4 @@ class RecipesConfig(AppConfig):
     name = 'recipes'
 
     def ready(self):
-        from core import signals
+        from core import signals  # noqa F401
