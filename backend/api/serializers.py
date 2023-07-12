@@ -5,13 +5,21 @@ from core.validators import ingredients_validator, tags_validator
 from django.core.files.base import ContentFile
 from django.db.models import F
 from djoser.serializers import UserSerializer
-from recipes.models import (Favorite, Ingredient, IngredientinRecipe, Recipe,
-                            Shopping, Tag)
 from rest_framework import serializers
+
 from users.models import Follow, User
+from recipes.models import (
+    Favorite,
+    Ingredient,
+    IngredientinRecipe,
+    Recipe,
+    Shopping,
+    Tag
+)
 
 
 class Base64ImageField(serializers.ImageField):
+
     def to_internal_value(self, data):
         if isinstance(data, str) and data.startswith('data:image'):
             file_format, img_code = data.split(';base64,')
