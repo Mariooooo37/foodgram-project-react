@@ -50,7 +50,12 @@ sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
 sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic
 
 ```
+Для загрузки ингредиентов в базу данных выполните команду
 
+```
+sudo docker compose -f docker-compose.yml exec backend python manage.py load_ingredients
+
+```
 ## .env
 
 В корне проекта создайте файл .env и пропишите в него свои данные.
@@ -66,6 +71,7 @@ DB_PORT=5432
 DEBUG=True
 SECRET_KEY = 'secret-key'
 ALLOWED_HOSTS = '000.000.00.000, localhost'
+GATEWAY_PORT=8000
 ```
 
 ## Автор
