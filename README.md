@@ -49,7 +49,7 @@ sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
 
 sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic
 ```
-Для загрузки ингредиентов в базу данных выполните команду
+Для загрузки ингредиентов в базу данных выполните команду:
 
 ```
 sudo docker compose -f docker-compose.yml exec backend python manage.py load_ingredients
