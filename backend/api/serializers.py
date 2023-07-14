@@ -7,15 +7,9 @@ from django.db.models import F
 from djoser.serializers import UserSerializer
 from rest_framework import serializers
 
+from recipes.models import (Favorite, Ingredient, IngredientinRecipe, Recipe,
+                            Shopping, Tag)
 from users.models import Follow, User
-from recipes.models import (
-    Favorite,
-    Ingredient,
-    IngredientinRecipe,
-    Recipe,
-    Shopping,
-    Tag
-)
 
 
 class Base64ImageField(serializers.ImageField):
@@ -89,15 +83,12 @@ class UserSubscription(CustomUserSerializer):
         recipes = obj.recipes.values(
             'id', 'name', 'image', 'cooking_time'
         )
-        recipes_data = []
         for recipe in recipes:
             image_url = urljoin(
                 request.build_absolute_uri('/media/'), recipe['image'])
             recipe['image'] = image_url
-            recipes_data.append(recipe)
-        return recipes_data
-        # Вот так поборол отображение ссылки, чтобы был абсолютный адрес у
-        # картинки в ответе api, но смущает наличие цикла в методе :)
+        return recipes
+        # Такс, ну я тут в принципе избавился от списка, меняю срзу recipes
 
     def get_recipes_count(self, obj):
         return obj.recipes.count()
@@ -158,10 +149,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         return data
 
     def create_ingredients(self, ingredients, recipe):
-        for i in ingredients:
-            ingredient = Ingredient.objects.get(id=i['id'])
+        for ing in ingredients:
+            ingredient = Ingredient.objects.get(id=ing['id'])
             IngredientinRecipe.objects.get_or_create(
-                ingredient=ingredient, recipe=recipe, amount=i['amount']
+                ingredient=ingredient, recipe=recipe, amount=ing['amount']
             )
 
     def create(self, validated_data):

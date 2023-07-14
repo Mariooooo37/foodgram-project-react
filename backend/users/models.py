@@ -3,6 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+
     email = models.EmailField(
         verbose_name='Email',
         unique=True,
@@ -11,13 +13,14 @@ class User(AbstractUser):
         verbose_name='Имя',
         max_length=150,
     )
+    # Переопределил, т.к. оно под капотом blank=True, по ТЗ оно обязательное
     last_name = models.CharField(
         verbose_name='Фамилия',
         max_length=150,
     )
 
-    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+    # Или этого поля достаточно, чтобы не переопределять?
 
     class Meta:
         ordering = ['id']

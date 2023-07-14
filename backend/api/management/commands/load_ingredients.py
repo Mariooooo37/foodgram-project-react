@@ -3,6 +3,7 @@ import os
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+
 from recipes.models import Ingredient
 
 CORRECT_LEN_ROW = 2
@@ -22,5 +23,3 @@ class Command(BaseCommand):
                         name=row[0],
                         measurement_unit=row[1],
                     )
-                else:
-                    continue

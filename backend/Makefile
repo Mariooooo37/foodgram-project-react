@@ -1,2 +1,2 @@
 run_server:
-	gunicorn --bind 0.0.0.0:8000 foodgram.wsgi
+	gunicorn --bind 0.0.0.0:$${GATEWAY_PORT} foodgram.wsgi

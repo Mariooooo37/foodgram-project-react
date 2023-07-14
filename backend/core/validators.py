@@ -1,24 +1,30 @@
 from django.core.exceptions import ValidationError
 
 
-def tags_validator(tags, Tag):
+def len_valid(len_1, len_2):
+    return len_1 != len_2
+
+
+def tags_validator(tags, tag):
     if tags is None or len(tags) == 0:
         raise ValidationError('Не указаны тэги')
-    if len(tags) != len(set(tags)):
+    len_tags_set = len(set(tags))
+    if len_valid(len(tags), len_tags_set):
         raise ValidationError('В запросе повторяющиеся тэги')
-    tags_obj = Tag.objects.filter(id__in=tags)
-    if len(set(tags)) != len(tags_obj):
+    tags_obj = tag.objects.filter(id__in=tags)
+    if len_valid(len_tags_set, len(tags_obj)):
         raise ValidationError('В запросе несуществующий тэг')
     return tags
 
 
-def ingredients_validator(ingredients, Ingredient):
+def ingredients_validator(ingredients, ingredient):
     if ingredients is None or len(ingredients) == 0:
         raise ValidationError('Не указаны ингредиенты')
     ingredient_ids = [ingredient['id'] for ingredient in ingredients]
-    ingredients_obj = Ingredient.objects.filter(id__in=ingredient_ids)
-    if len(ingredient_ids) != len(set(ingredient_ids)):
+    len_ing_ids_set = len(set(ingredient_ids))
+    ingredients_obj = ingredient.objects.filter(id__in=ingredient_ids)
+    if len_valid(len(ingredient_ids), len_ing_ids_set):
         raise ValidationError('В запросе повторяющиеся ингредиенты')
-    if len(set(ingredient_ids)) != len(ingredients_obj):
+    if len_valid(len_ing_ids_set, len(ingredients_obj)):
         raise ValidationError('В запросе несуществующие ингредиенты')
     return ingredients

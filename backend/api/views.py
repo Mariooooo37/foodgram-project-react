@@ -6,21 +6,15 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from api.filters import IngredientFilter, RecipeFilter
+from api.paginations import CustomPagination
+from api.permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
+from api.serializers import (CustomUserSerializer, IngredientSerializer,
+                             RecipeMiniSerializer, RecipeSerializer,
+                             TagSerializer, UserSubscription)
+from recipes.models import (Favorite, Ingredient, IngredientinRecipe, Recipe,
+                            Shopping, Tag)
 from users.models import Follow, User
-from recipes.models import (
-    Favorite,
-    Ingredient,
-    IngredientinRecipe,
-    Recipe,
-    Shopping,
-    Tag
-)
-from .filters import IngredientFilter, RecipeFilter
-from .paginations import CustomPagination
-from .permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
-from .serializers import (CustomUserSerializer, IngredientSerializer,
-                          RecipeMiniSerializer, RecipeSerializer,
-                          TagSerializer, UserSubscription)
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -40,9 +34,6 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 class CustomUserViewSet(UserViewSet):
     queryset = User.objects.all()
     permission_classes = (IsAuthorOrReadOnly,)
-    # По ТЗ список юзеров доступен всем, выглядит очень странно, я бы
-    # дал к этим эндпоинтам доступ только админам, хотя у нас и в рецептах
-    # автор подгружается со всей инфой. Но пока оставил по ТЗ)
     serializer_class = CustomUserSerializer
     pagination_class = CustomPagination
 

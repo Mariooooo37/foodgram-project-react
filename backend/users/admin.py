@@ -11,8 +11,6 @@ class UserAdmin(admin.ModelAdmin):
         'username', 'first_name', 'last_name', 'email', 'is_active'
     )
     list_filter = ('first_name', 'email',)
-    # Если честно не понял, зачем нам фильтры по имени и почте, почта -
-    # unique=True. А фильтр по имени бесполезный)
 
 
 class FollowAdmin(admin.ModelAdmin):
