@@ -44,7 +44,6 @@ class Ingredient(models.Model):
         ordering = ['name']
         verbose_name = ('Ингредиент')
         verbose_name_plural = (u"\u200B"u"\u200B"'Ингредиенты')
-        # Понял, пока тогда так оставлю, после сдачи еще поковыряюсь)
 
     def __str__(self):
         return self.name

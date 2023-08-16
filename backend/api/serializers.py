@@ -88,7 +88,6 @@ class UserSubscription(CustomUserSerializer):
                 request.build_absolute_uri('/media/'), recipe['image'])
             recipe['image'] = image_url
         return recipes
-        # Такс, ну я тут в принципе избавился от списка, меняю срзу recipes
 
     def get_recipes_count(self, obj):
         return obj.recipes.count()

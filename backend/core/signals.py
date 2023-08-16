@@ -8,5 +8,3 @@ from recipes.models import Recipe
 def delete_image(sender, instance, **kwargs):
     if instance.image:
         instance.image.delete(False)
-# Как тогда быть? Кроме такого способа не натыкался на другие варианты
-# А чистить не нужные картинки таки надо, иначе будет много мусора)
